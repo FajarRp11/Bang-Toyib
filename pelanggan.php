@@ -1,7 +1,7 @@
 <?php
 include ('koneksi.php');
 
-$data = mysqli_query($koneksi, "SELECT * FROM kasir WHERE ID_Kasir = '1100'");
+$data = mysqli_query($koneksi, "SELECT * FROM kasir WHERE ID_Kasir = 'KSR1'");
 $hasil = mysqli_fetch_assoc($data);
 
 function ribuan($nilai)
@@ -25,25 +25,25 @@ if (isset($_POST['tambahPelanggan'])) {
         $tambah = mysqli_query($koneksi, $query);
         if ($tambah) {
             ?>
-            <script>
-                alert('Data pelanggan berhasil ditambahkan');
-            </script>
-            <?php
+<script>
+alert('Data pelanggan berhasil ditambahkan');
+</script>
+<?php
             header('location:pelanggan.php');
         } else {
             ?>
-            <script>
-                alert('Gagal menambahkan data pelanggan');
-            </script>
-            <?php
+<script>
+alert('Gagal menambahkan data pelanggan');
+</script>
+<?php
             header('location:pelanggan.php');
         }
     } else {
         ?>
-        <script>
-            alert('ID Pelanggan sudah ada');
-        </script>
-        <?php
+<script>
+alert('ID Pelanggan sudah ada');
+</script>
+<?php
         header('location:pelanggan.php');
     }
 }
@@ -58,17 +58,17 @@ if (isset($_POST['editPelanggan'])) {
     $edit = mysqli_query($koneksi, $query);
     if ($edit) {
         ?>
-        <script>
-            alert('Data pelanggan berhasil diupdate');
-        </script>
-        <?php
+<script>
+alert('Data pelanggan berhasil diupdate');
+</script>
+<?php
         header('location:pelanggan.php');
     } else {
         ?>
-        <script>
-            alert('Gagal mengupdate data pelanggan');
-        </script>
-        <?php
+<script>
+alert('Gagal mengupdate data pelanggan');
+</script>
+<?php
         header('location:pelanggan.php');
     }
 }
@@ -81,17 +81,17 @@ if (isset($_POST['hapusPelanggan'])) {
     $hapus = mysqli_query($koneksi, $query);
     if ($hapus) {
         ?>
-        <script>
-            alert('Data pelanggan berhasil dihapus');
-        </script>
-        <?php
+<script>
+alert('Data pelanggan berhasil dihapus');
+</script>
+<?php
         header('location: pelanggan.php');
     } else {
         ?>
-        <script>
-            alert('Gagal menghapus data pelanggan');
-        </script>
-        <?php
+<script>
+alert('Gagal menghapus data pelanggan');
+</script>
+<?php
         header('location: pelanggan.php');
     }
 }
@@ -123,10 +123,10 @@ if (isset($_POST['hapusPelanggan'])) {
                             <a class="opacity-5 text-dark" href="javascript:;">Pages</a>
                         </li>
                         <li class="breadcrumb-item text-sm text-dark active" aria-current="page">
-                            Menu
+                            Pelanggan
                         </li>
                     </ol>
-                    <h6 class="font-weight-bolder mb-0">Menu</h6>
+                    <h6 class="font-weight-bolder mb-0">Pelanggan</h6>
                 </nav>
                 <div class="collapse justify-content-end navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
                     <ul class="navbar-nav ">
@@ -160,6 +160,10 @@ if (isset($_POST['hapusPelanggan'])) {
                                         <tr>
                                             <th
                                                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                NO
+                                            </th>
+                                            <th
+                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Nama Item
                                             </th>
                                             <th
@@ -171,107 +175,114 @@ if (isset($_POST['hapusPelanggan'])) {
                                     </thead>
                                     <tbody>
                                         <?php
+                                        $no = 1;
+
                                         $hasil = mysqli_query($koneksi, "SELECT * FROM pelanggan ORDER BY ID_Pelanggan ASC");
                                         while ($data = mysqli_fetch_assoc($hasil)):
                                             $id = $data['ID_Pelanggan'];
                                             ?>
-                                            <tr>
-                                                <td>
-                                                    <h6 class="mb-0 text-sm px-3"><?= $data['Nama_Pelanggan'] ?></h6>
-                                                </td>
-                                                <td>
-                                                    <button type="button" class="btn bg-success text-white mb-0"
-                                                        data-bs-toggle="modal" data-bs-target="#edit<?= $id ?>">
-                                                        <i class="fa fa-pencil" aria-hidden="true"></i>
-                                                    </button>
-                                                    <button type="button" class="btn bg-danger text-white mb-0"
-                                                        data-bs-toggle="modal" data-bs-target="#hapus<?= $id ?>">
-                                                        <i class="fa fa-trash" aria-hidden="true"></i>
-                                                    </button>
+                                        <tr>
+                                            <td>
+                                                <h6 class="mb-0 text-sm px-3"><?= $no++ ?></h6>
+                                            </td>
+                                            <td>
+                                                <h6 class="mb-0 text-sm px-3"><?= $data['Nama_Pelanggan'] ?></h6>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn bg-success text-white mb-0"
+                                                    data-bs-toggle="modal" data-bs-target="#edit<?= $id ?>">
+                                                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                                                </button>
+                                                <button type="button" class="btn bg-danger text-white mb-0"
+                                                    data-bs-toggle="modal" data-bs-target="#hapus<?= $id ?>">
+                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
 
-                                                </td>
-                                            </tr>
-
-                                            <!-- MODAL DELETE PELANGGAN -->
-                                            <div class="modal fade" id="hapus<?= $id ?>" data-bs-backdrop="static"
-                                                data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
-                                                aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                                aria-label="Close"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <form role="form" method="POST">
-                                                                <p>Apakah anda yakin ingin menghapus
-                                                                    <?= $data['Nama_Pelanggan']; ?>?
-                                                                </p>
-                                                                <div class="mb-3">
-                                                                    <input id="ID_Pelanggan" name="ID_Pelanggan"
-                                                                        type="hidden" class="form-control"
-                                                                        placeholder="ID Item" aria-label="Email"
-                                                                        aria-describedby="email-addon" value="<?= $id ?>">
-                                                                </div>
-
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-outline-secondary"
-                                                                data-bs-dismiss="modal">Tutup</button>
-                                                            <input type="submit" name="hapusPelanggan"
-                                                                class="btn bg-info text-white" value="Hapus">
-                                                        </div>
+                                        <!-- MODAL DELETE PELANGGAN -->
+                                        <div class="modal fade" id="hapus<?= $id ?>" data-bs-backdrop="static"
+                                            data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                            aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Hapus
+                                                            Pelanggan</h1>
+                                                        <button type="button" class="btn btn-outline-secondary"
+                                                            data-bs-dismiss="modal" aria-label="Close">
+                                                            <i class="fa fa-times" aria-hidden="true"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form role="form" method="POST">
+                                                            <p>Apakah anda yakin ingin menghapus
+                                                                <?= $data['Nama_Pelanggan']; ?>?
+                                                            </p>
+                                                            <div class="mb-3">
+                                                                <input id="ID_Pelanggan" name="ID_Pelanggan"
+                                                                    type="hidden" class="form-control"
+                                                                    placeholder="ID Item" aria-label="Email"
+                                                                    aria-describedby="email-addon" value="<?= $id ?>">
+                                                            </div>
+                                                            <div class="d-flex justify-content-end">
+                                                                <button type="button"
+                                                                    class="btn btn-outline-secondary mx-2"
+                                                                    data-bs-dismiss="modal">Tutup</button>
+                                                                <input type="submit" name="hapusPelanggan"
+                                                                    class="btn bg-info text-white" value="Hapus">
+                                                            </div>
                                                         </form>
+                                                    </div>
 
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- MODAL EDIT PELANGGAN -->
+                                        <div class="modal fade" id="edit<?= $id ?>" data-bs-backdrop="static"
+                                            data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                            aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Edit
+                                                            Pelanggan</h1>
+                                                        <button type="button" class="btn btn-outline-secondary"
+                                                            data-bs-dismiss="modal" aria-label="Close">
+                                                            <i class="fa fa-times" aria-hidden="true"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form role="form" method="POST">
+                                                            <input id="ID_Pelanggan" name="ID_Pelanggan" type="hidden"
+                                                                class="form-control" placeholder="ID Pelanggan"
+                                                                aria-label="Email" aria-describedby="email-addon"
+                                                                value="<?= $id ?>">
+                                                            <label for="Nama_Pelanggan">Nama Pelanggan</label>
+                                                            <div class="mb-3">
+                                                                <input id="Nama_Pelanggan" name="Nama_Pelanggan"
+                                                                    type="text" class="form-control"
+                                                                    placeholder="ID Pelanggan" aria-label="Email"
+                                                                    aria-describedby="email-addon"
+                                                                    value="<?= $data['Nama_Pelanggan'] ?>">
+                                                            </div>
+
+                                                            <div class="d-flex justify-content-end">
+                                                                <button type="button"
+                                                                    class="btn btn-outline-secondary mx-2"
+                                                                    data-bs-dismiss="modal">Tutup</button>
+                                                                <input type="submit" name="editPelanggan"
+                                                                    class="btn bg-info text-white" value="Simpan">
+                                                            </div>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
-
-                                            <!-- MODAL EDIT PELANGGAN -->
-                                            <div class="modal fade" id="edit<?= $id ?>" data-bs-backdrop="static"
-                                                data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
-                                                aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Menu
-                                                            </h1>
-                                                            <button type="button" class="btn btn-outline-secondary"
-                                                                data-bs-dismiss="modal" aria-label="Close">
-                                                                <i class="fa fa-times" aria-hidden="true"></i>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <form role="form" method="POST">
-                                                                <div class="mb-3">
-                                                                    <input id="ID_Pelanggan" name="ID_Pelanggan"
-                                                                        type="hidden" class="form-control"
-                                                                        placeholder="ID Item" aria-label="Email"
-                                                                        aria-describedby="email-addon" value="<?= $id ?>">
-                                                                </div>
-                                                                <label for="Nama_Pelanggan">Nama Pelanggan</label>
-                                                                <div class="mb-3">
-                                                                    <input id="Nama_Pelanggan" name="Nama_Pelanggan"
-                                                                        type="text" class="form-control"
-                                                                        placeholder="ID Item" aria-label="Email"
-                                                                        aria-describedby="email-addon"
-                                                                        value="<?= $data['Nama_Pelanggan'] ?>">
-                                                                </div>
-
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-outline-secondary"
-                                                                        data-bs-dismiss="modal">Tutup</button>
-                                                                    <input type="submit" name="editPelanggan"
-                                                                        class="btn bg-info text-white" value="Simpan">
-                                                                </div>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                        </div>
 
 
-                                            <?php endwhile ?>
+                                        <?php endwhile ?>
                                     </tbody>
                                 </table>
                                 <!-- MODAL INPUT PELANGGAN -->
@@ -281,7 +292,7 @@ if (isset($_POST['hapusPelanggan'])) {
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Input Menu</h1>
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Input Pelanggan</h1>
                                                 <button type="button" class="btn btn-outline-secondary"
                                                     data-bs-dismiss="modal" aria-label="Close">
                                                     <i class="fa fa-times" aria-hidden="true"></i>
@@ -292,13 +303,13 @@ if (isset($_POST['hapusPelanggan'])) {
                                                     <label for="ID_Pelanggan">ID Pelanggan</label>
                                                     <div class="mb-3">
                                                         <input id="ID_Pelanggan" name="ID_Pelanggan" type="text"
-                                                            class="form-control" placeholder="ID Item"
+                                                            class="form-control" placeholder="ID Pelanggan"
                                                             aria-label="Email" aria-describedby="email-addon">
                                                     </div>
                                                     <label for="Nama_Pelanggan">Nama Pelanggan</label>
                                                     <div class="mb-3">
                                                         <input id="Nama_Pelanggan" name="Nama_Pelanggan" type="text"
-                                                            class="form-control" placeholder="ID Item"
+                                                            class="form-control" placeholder="Nama Pelanggan"
                                                             aria-label="Email" aria-describedby="email-addon">
                                                     </div>
                                                     <div class="d-flex justify-content-end">
@@ -317,7 +328,6 @@ if (isset($_POST['hapusPelanggan'])) {
                     </div>
                 </div>
             </div>
-
         </div>
     </main>
     <?php include ("assets/js/mainjs.php") ?>

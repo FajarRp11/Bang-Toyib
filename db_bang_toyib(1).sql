@@ -31,12 +31,8 @@ CREATE TABLE `detail` (
   `ID_INV` varchar(100) NOT NULL,
   `ID_Item` varchar(100) NOT NULL,
   `Jumlah_Item` int(11) NOT NULL,
-  `Harga_Satuan` decimal(10,2) NOT NULL,
-  `Sub_Total` decimal(10,2) GENERATED ALWAYS AS (`Jumlah_Item` * `Harga_Satuan`) STORED,
-  `Pajak_10_Persen` decimal(10,2) GENERATED ALWAYS AS (`Sub_Total` * 0.10) STORED,
-  `Total_Bill` decimal(10,2) GENERATED ALWAYS AS (`Sub_Total` + `Pajak_10_Persen`) STORED,
-  `Uang_Dibayar` decimal(10,2) NOT NULL,
-  `Uang_Kembalian` decimal(10,2) GENERATED ALWAYS AS (`Uang_Dibayar` - `Total_Bill`) VIRTUAL
+  `Harga_Satuan` varchar(100) NOT NULL,
+  `Uang_Dibayar` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -44,10 +40,10 @@ CREATE TABLE `detail` (
 --
 
 INSERT INTO `detail` (`ID_INV`, `ID_Item`, `Jumlah_Item`, `Harga_Satuan`, `Uang_Dibayar`) VALUES
-('1', 'ITM1', 1, 25000.00, 27500.00),
-('1', 'ITM2', 1, 2000.00, 2200.00),
-('1', 'ITM3', 1, 16000.00, 17600.00),
-('1', 'ITM4', 1, 5000.00, 5500.00);
+('1', 'ITM1', 1, '25000', '27500'),
+('1', 'ITM2', 1, '2000', '2200'),
+('1', 'ITM3', 1, '16000', '17600'),
+('1', 'ITM4', 1, '5000', '5500');
 
 -- --------------------------------------------------------
 
@@ -108,20 +104,20 @@ INSERT INTO `pelanggan` (`ID_Pelanggan`, `Nama_Pelanggan`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `service`
+-- Table structure for table `menu`
 --
 
-CREATE TABLE `service` (
+CREATE TABLE `menu` (
   `ID_Item` varchar(100) NOT NULL,
   `Nama_Item` varchar(100) NOT NULL,
   `Harga_Satuan` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `service`
+-- Dumping data for table `menu`
 --
 
-INSERT INTO `service` (`ID_Item`, `Nama_Item`, `Harga_Satuan`) VALUES
+INSERT INTO `menu` (`ID_Item`, `Nama_Item`, `Harga_Satuan`) VALUES
 ('ITM1', 'PAKET 2', 25000.00),
 ('ITM2', 'TAMBAH NASI', 2000.00),
 ('ITM3', 'MIE NYEMEK', 16000.00),
@@ -159,9 +155,9 @@ ALTER TABLE `pelanggan`
   ADD PRIMARY KEY (`ID_Pelanggan`);
 
 --
--- Indexes for table `service`
+-- Indexes for table `menu`
 --
-ALTER TABLE `service`
+ALTER TABLE `menu`
   ADD PRIMARY KEY (`ID_Item`);
 
 --
@@ -173,7 +169,7 @@ ALTER TABLE `service`
 --
 ALTER TABLE `detail`
   ADD CONSTRAINT `detail_ibfk_1` FOREIGN KEY (`ID_INV`) REFERENCES `header` (`ID_INV`),
-  ADD CONSTRAINT `detail_ibfk_2` FOREIGN KEY (`ID_Item`) REFERENCES `service` (`ID_Item`);
+  ADD CONSTRAINT `detail_ibfk_2` FOREIGN KEY (`ID_Item`) REFERENCES `menu` (`ID_Item`);
 
 --
 -- Constraints for table `header`

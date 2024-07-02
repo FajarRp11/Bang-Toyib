@@ -1,7 +1,7 @@
 <?php
 include ('koneksi.php');
 
-$data = mysqli_query($koneksi, "SELECT * FROM kasir WHERE ID_Kasir = '1100'");
+$data = mysqli_query($koneksi, "SELECT * FROM kasir WHERE ID_Kasir = 'KSR1'");
 $hasil = mysqli_fetch_assoc($data);
 
 function ribuan($nilai)
@@ -148,6 +148,10 @@ if (isset($_POST['hapusMenu'])) {
                                         <tr>
                                             <th
                                                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                NO
+                                            </th>
+                                            <th
+                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Nama Item
                                             </th>
                                             <th
@@ -163,11 +167,15 @@ if (isset($_POST['hapusMenu'])) {
                                     </thead>
                                     <tbody>
                                         <?php
+                                        $no = 1;
                                         $hasil = mysqli_query($koneksi, "SELECT * FROM menu ORDER BY ID_Item ASC");
                                         while ($data = mysqli_fetch_assoc($hasil)) {
                                             $id = $data['ID_Item'];
                                             ?>
                                             <tr>
+                                                <td>
+                                                    <h6 class="mb-0 text-sm px-3"><?= $no++ ?></h6>
+                                                </td>
                                                 <td>
                                                     <h6 class="mb-0 text-sm px-3"><?= $data['Nama_Item'] ?></h6>
                                                 </td>
@@ -193,7 +201,7 @@ if (isset($_POST['hapusMenu'])) {
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                                            <h5 class="modal-title" id="exampleModalLabel">Hapus Menu</h5>
                                                             <button type="button" class="btn btn-outline-secondary"
                                                                 data-bs-dismiss="modal" aria-label="Close">
                                                                 <i class="fa fa-times" aria-hidden="true"></i>
@@ -210,15 +218,15 @@ if (isset($_POST['hapusMenu'])) {
                                                                         aria-label="Email" aria-describedby="email-addon"
                                                                         value="<?= $id ?>">
                                                                 </div>
-
+                                                                <div class="d-flex justify-content-end">
+                                                                    <button type="button"
+                                                                        class="btn btn-outline-secondary mx-2"
+                                                                        data-bs-dismiss="modal">Tutup</button>
+                                                                    <input type="submit" name="hapusMenu"
+                                                                        class="btn bg-info text-white" value="Hapus">
+                                                                </div>
+                                                            </form>
                                                         </div>
-                                                        <div class="d-flex justify-content-end px-3">
-                                                            <button type="button" class="btn btn-outline-secondary mx-2"
-                                                                data-bs-dismiss="modal">Tutup</button>
-                                                            <input type="submit" name="hapusMenu"
-                                                                class="btn bg-info text-white" value="Hapus">
-                                                        </div>
-                                                        </form>
 
                                                     </div>
                                                 </div>
@@ -239,12 +247,10 @@ if (isset($_POST['hapusMenu'])) {
                                                         </div>
                                                         <div class="modal-body">
                                                             <form role="form" method="POST">
-                                                                <div class="mb-3">
-                                                                    <input id="ID_Item" name="ID_Item" type="hidden"
-                                                                        class="form-control" placeholder="ID Item"
-                                                                        aria-label="Email" aria-describedby="email-addon"
-                                                                        value="<?= $id ?>">
-                                                                </div>
+                                                                <input id="ID_Item" name="ID_Item" type="hidden"
+                                                                    class="form-control" placeholder="ID Item"
+                                                                    aria-label="Email" aria-describedby="email-addon"
+                                                                    value="<?= $id ?>">
                                                                 <label for="Nama_Item">Nama Item</label>
                                                                 <div class="mb-3">
                                                                     <input id="Nama_Item" name="Nama_Item" type="text"
