@@ -35,17 +35,17 @@ if (isset($_POST['tambahMenu'])) {
         $tambah = mysqli_query($koneksi, $query);
         if ($tambah) {
             ?>
-<script>
-alert('Data menu berhasil ditambahkan');
-</script>
-<?php
+            <script>
+                alert('Data menu berhasil ditambahkan');
+            </script>
+            <?php
             header('location:menu.php');
         } else {
             ?>
-<script>
-alert('Gagal menambah data menu');
-</script>
-<?php
+            <script>
+                alert('Gagal menambah data menu');
+            </script>
+            <?php
             header('location:menu.php');
         }
     } else {
@@ -65,17 +65,17 @@ if (isset($_POST['editMenu'])) {
     $edit = mysqli_query($koneksi, $query);
     if ($edit) {
         ?>
-<script>
-alert('Berhasil update data menu')
-</script>
-<?php
+        <script>
+            alert('Berhasil update data menu')
+        </script>
+        <?php
         header('location:menu.php');
     } else {
         ?>
-<script>
-alert('Gagal update data menu')
-</script>
-<?php
+        <script>
+            alert('Gagal update data menu')
+        </script>
+        <?php
         header('location:menu.php');
     }
 }
@@ -182,70 +182,70 @@ if (isset($_POST['hapusMenu'])) {
                                         while ($data = mysqli_fetch_assoc($hasilTampil)) {
                                             $id = $data['ID_INV'];
                                             ?>
-                                        <tr>
-                                            <td>
-                                                <h6 class="mb-0 text-sm px-3">
-                                                    <?= $data['Tanggal'] ?>/<?= $data['ID_INV'] ?>
-                                                </h6>
-                                            </td>
-                                            <td>
-                                                <h6 class="mb-0 text-sm px-3"><?= $data['Tanggal'] ?></h6>
-                                            </td>
-                                            <td>
-                                                <h6 class="mb-0 text-sm px-3"><?= $data['Nama_Pelanggan'] ?></h6>
-                                            </td>
-                                            <td>
-                                                <h6 class="mb-0 text-sm px-3"><?= $data['Nama_Kasir'] ?></h6>
-                                            </td>
-                                            <td>
-                                                <a href="detail-invoice.php?id=<?= $id ?>"
-                                                    class="btn bg-info text-white mb-0">
-                                                    <i class="fa fa-info-circle" aria-hidden="true"></i>
-                                                </a>
-                                                <button type="button" class="btn bg-danger text-white mb-0"
-                                                    data-bs-toggle="modal" data-bs-target="#hapus<?= $id ?>">
-                                                    <i class="fa fa-trash" aria-hidden="true"></i>
-                                                </button>
+                                            <tr>
+                                                <td>
+                                                    <h6 class="mb-0 text-sm px-3">
+                                                        <?= $data['Tanggal'] ?>/<?= $data['ID_INV'] ?>
+                                                    </h6>
+                                                </td>
+                                                <td>
+                                                    <h6 class="mb-0 text-sm px-3"><?= $data['Tanggal'] ?></h6>
+                                                </td>
+                                                <td>
+                                                    <h6 class="mb-0 text-sm px-3"><?= $data['Nama_Pelanggan'] ?></h6>
+                                                </td>
+                                                <td>
+                                                    <h6 class="mb-0 text-sm px-3"><?= $data['Nama_Kasir'] ?></h6>
+                                                </td>
+                                                <td>
+                                                    <a href="detail-invoice.php?id=<?= $id ?>"
+                                                        class="btn bg-info text-white mb-0">
+                                                        <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                                    </a>
+                                                    <button type="button" class="btn bg-danger text-white mb-0"
+                                                        data-bs-toggle="modal" data-bs-target="#hapus<?= $id ?>">
+                                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                                    </button>
 
-                                            </td>
-                                        </tr>
-                                        <!-- MODAL DELETE MENU -->
-                                        <div class="modal fade" id="hapus<?= $id ?>" data-bs-backdrop="static"
-                                            data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
-                                            aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Hapus Menu</h5>
-                                                        <button type="button" class="btn btn-outline-secondary"
-                                                            data-bs-dismiss="modal" aria-label="Close">
-                                                            <i class="fa fa-times" aria-hidden="true"></i>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <form role="form" method="POST">
-                                                            <p>Apakah anda yakin ingin menghapus
-                                                                <?= $data['Nama_Item']; ?>?
-                                                            </p>
-                                                            <div class="mb-3">
-                                                                <input id="ID_Item" name="ID_Item" type="hidden"
-                                                                    class="form-control" placeholder="ID Item"
-                                                                    aria-label="Email" aria-describedby="email-addon"
-                                                                    value="<?= $id ?>">
-                                                            </div>
-                                                            <div class="d-flex justify-content-end">
-                                                                <button type="button"
-                                                                    class="btn btn-outline-secondary mx-2"
-                                                                    data-bs-dismiss="modal">Tutup</button>
-                                                                <input type="submit" name="hapusMenu"
-                                                                    class="btn bg-info text-white" value="Hapus">
-                                                            </div>
-                                                        </form>
-                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <!-- MODAL DELETE MENU -->
+                                            <div class="modal fade" id="hapus<?= $id ?>" data-bs-backdrop="static"
+                                                data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                                aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Hapus Menu</h5>
+                                                            <button type="button" class="btn btn-outline-secondary"
+                                                                data-bs-dismiss="modal" aria-label="Close">
+                                                                <i class="fa fa-times" aria-hidden="true"></i>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form role="form" method="POST">
+                                                                <p>Apakah anda yakin ingin menghapus
+                                                                    <?= $data['Nama_Item']; ?>?
+                                                                </p>
+                                                                <div class="mb-3">
+                                                                    <input id="ID_Item" name="ID_Item" type="hidden"
+                                                                        class="form-control" placeholder="ID Item"
+                                                                        aria-label="Email" aria-describedby="email-addon"
+                                                                        value="<?= $id ?>">
+                                                                </div>
+                                                                <div class="d-flex justify-content-end">
+                                                                    <button type="button"
+                                                                        class="btn btn-outline-secondary mx-2"
+                                                                        data-bs-dismiss="modal">Tutup</button>
+                                                                    <input type="submit" name="hapusMenu"
+                                                                        class="btn bg-info text-white" value="Hapus">
+                                                                </div>
+                                                            </form>
+                                                        </div>
 
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
                                         <?php } ?>
                                     </tbody>
                                 </table>

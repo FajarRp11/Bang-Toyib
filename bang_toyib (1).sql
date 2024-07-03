@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 15, 2024 at 03:46 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Waktu pembuatan: 03 Jul 2024 pada 10.04
+-- Versi server: 10.4.32-MariaDB
+-- Versi PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,57 +18,56 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `db_bang_toyib`
+-- Database: `bang_toyib`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `detail`
+-- Struktur dari tabel `detail`
 --
 
 CREATE TABLE `detail` (
   `ID_INV` varchar(100) NOT NULL,
   `ID_Item` varchar(100) NOT NULL,
-  `Jumlah_Item` int(11) NOT NULL,
-  `Harga_Satuan` varchar(100) NOT NULL,
-  `Uang_Dibayar` varchar(100) NOT NULL
+  `Jumlah_Item` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `detail`
+-- Dumping data untuk tabel `detail`
 --
 
-INSERT INTO `detail` (`ID_INV`, `ID_Item`, `Jumlah_Item`, `Harga_Satuan`, `Uang_Dibayar`) VALUES
-('1', 'ITM1', 1, '25000', '27500'),
-('1', 'ITM2', 1, '2000', '2200'),
-('1', 'ITM3', 1, '16000', '17600'),
-('1', 'ITM4', 1, '5000', '5500');
+INSERT INTO `detail` (`ID_INV`, `ID_Item`, `Jumlah_Item`) VALUES
+('1', 'ITM1', 1),
+('1', 'ITM2', 1),
+('1', 'ITM3', 1),
+('1', 'ITM4', 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `header`
+-- Struktur dari tabel `header`
 --
 
 CREATE TABLE `header` (
   `ID_INV` varchar(100) NOT NULL,
   `Tanggal` date NOT NULL,
   `ID_Pelanggan` varchar(100) DEFAULT NULL,
-  `ID_Kasir` varchar(100) DEFAULT NULL
+  `ID_Kasir` varchar(100) DEFAULT NULL,
+  `Jumlah_Bayar` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `header`
+-- Dumping data untuk tabel `header`
 --
 
-INSERT INTO `header` (`ID_INV`, `Tanggal`, `ID_Pelanggan`, `ID_Kasir`) VALUES
-('1', '2024-05-20', 'PLGN1', 'KSR1');
+INSERT INTO `header` (`ID_INV`, `Tanggal`, `ID_Pelanggan`, `ID_Kasir`, `Jumlah_Bayar`) VALUES
+('1', '2024-05-20', 'PLGN1', 'KSR1', '48000');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `kasir`
+-- Struktur dari tabel `kasir`
 --
 
 CREATE TABLE `kasir` (
@@ -77,7 +76,7 @@ CREATE TABLE `kasir` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `kasir`
+-- Dumping data untuk tabel `kasir`
 --
 
 INSERT INTO `kasir` (`ID_Kasir`, `Nama_Kasir`) VALUES
@@ -86,7 +85,29 @@ INSERT INTO `kasir` (`ID_Kasir`, `Nama_Kasir`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pelanggan`
+-- Struktur dari tabel `menu`
+--
+
+CREATE TABLE `menu` (
+  `ID_Item` varchar(100) NOT NULL,
+  `Nama_Item` varchar(100) NOT NULL,
+  `Harga_Satuan` varchar(35) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `menu`
+--
+
+INSERT INTO `menu` (`ID_Item`, `Nama_Item`, `Harga_Satuan`) VALUES
+('ITM1', 'PAKET 2', '25000'),
+('ITM2', 'TAMBAH NASI', '2000'),
+('ITM3', 'MIE NYEMEK', '16000'),
+('ITM4', 'TEH ES', '5000');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `pelanggan`
 --
 
 CREATE TABLE `pelanggan` (
@@ -95,47 +116,25 @@ CREATE TABLE `pelanggan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `pelanggan`
+-- Dumping data untuk tabel `pelanggan`
 --
 
 INSERT INTO `pelanggan` (`ID_Pelanggan`, `Nama_Pelanggan`) VALUES
 ('PLGN1', 'BAYU');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `menu`
---
-
-CREATE TABLE `menu` (
-  `ID_Item` varchar(100) NOT NULL,
-  `Nama_Item` varchar(100) NOT NULL,
-  `Harga_Satuan` decimal(10,2) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `menu`
---
-
-INSERT INTO `menu` (`ID_Item`, `Nama_Item`, `Harga_Satuan`) VALUES
-('ITM1', 'PAKET 2', 25000.00),
-('ITM2', 'TAMBAH NASI', 2000.00),
-('ITM3', 'MIE NYEMEK', 16000.00),
-('ITM4', 'TEH ES', 5000.00);
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `detail`
+-- Indeks untuk tabel `detail`
 --
 ALTER TABLE `detail`
   ADD PRIMARY KEY (`ID_INV`,`ID_Item`),
   ADD KEY `ID_Item` (`ID_Item`);
 
 --
--- Indexes for table `header`
+-- Indeks untuk tabel `header`
 --
 ALTER TABLE `header`
   ADD PRIMARY KEY (`ID_INV`),
@@ -143,36 +142,36 @@ ALTER TABLE `header`
   ADD KEY `ID_Kasir` (`ID_Kasir`);
 
 --
--- Indexes for table `kasir`
+-- Indeks untuk tabel `kasir`
 --
 ALTER TABLE `kasir`
   ADD PRIMARY KEY (`ID_Kasir`);
 
 --
--- Indexes for table `pelanggan`
---
-ALTER TABLE `pelanggan`
-  ADD PRIMARY KEY (`ID_Pelanggan`);
-
---
--- Indexes for table `menu`
+-- Indeks untuk tabel `menu`
 --
 ALTER TABLE `menu`
   ADD PRIMARY KEY (`ID_Item`);
 
 --
--- Constraints for dumped tables
+-- Indeks untuk tabel `pelanggan`
+--
+ALTER TABLE `pelanggan`
+  ADD PRIMARY KEY (`ID_Pelanggan`);
+
+--
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --
 
 --
--- Constraints for table `detail`
+-- Ketidakleluasaan untuk tabel `detail`
 --
 ALTER TABLE `detail`
   ADD CONSTRAINT `detail_ibfk_1` FOREIGN KEY (`ID_INV`) REFERENCES `header` (`ID_INV`),
   ADD CONSTRAINT `detail_ibfk_2` FOREIGN KEY (`ID_Item`) REFERENCES `menu` (`ID_Item`);
 
 --
--- Constraints for table `header`
+-- Ketidakleluasaan untuk tabel `header`
 --
 ALTER TABLE `header`
   ADD CONSTRAINT `header_ibfk_1` FOREIGN KEY (`ID_Pelanggan`) REFERENCES `pelanggan` (`ID_Pelanggan`),
