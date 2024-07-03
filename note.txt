@@ -1,0 +1,2 @@
+BUAT DATABASE DENGAN NAMA bang_toyib PADA PHPMYADMIN
+IMPORT FILE bang_toyib (1).sql

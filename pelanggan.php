@@ -1,9 +1,6 @@
 <?php
 include ('koneksi.php');
 
-$data = mysqli_query($koneksi, "SELECT * FROM kasir WHERE ID_Kasir = 'KSR1'");
-$hasil = mysqli_fetch_assoc($data);
-
 function ribuan($nilai)
 {
     return number_format($nilai, 0, ',', '.');
@@ -106,7 +103,6 @@ alert('Gagal menghapus data pelanggan');
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png" />
     <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
-    <title>Soft UI Dashboard by Creative Tim</title>
     <?php include ("assets/css/maincss.php"); ?>
 </head>
 
@@ -133,7 +129,7 @@ alert('Gagal menghapus data pelanggan');
                         <li class="nav-item d-flex align-items-center">
                             <p href="javascript:;" class="nav-link text-body font-weight-bold px-0">
                                 <i class="fa fa-user me-sm-1"></i>
-                                <span class="d-sm-inline d-none"><?= $hasil['Nama_Kasir'] ?></span>
+                                <span class="d-sm-inline d-none">Admin</span>
                             </p>
                         </li>
                     </ul>
@@ -146,7 +142,7 @@ alert('Gagal menghapus data pelanggan');
                 <div class="col-12">
                     <div class="card mb-4">
                         <div class="card-header pb-0 d-flex align-items-center justify-content-between">
-                            <h6>Authors table</h6>
+                            <h6>Tabel Pelanggan</h6>
                             <!-- Button trigger modal -->
                             <button type="button" class="btn bg-gradient-dark" data-bs-toggle="modal"
                                 data-bs-target="#inputPelanggan">

@@ -1,10 +1,6 @@
 <?php
 include ('koneksi.php');
 
-$data = mysqli_query($koneksi, "SELECT * FROM kasir WHERE ID_Kasir = 'KSR1'");
-$hasil = mysqli_fetch_assoc($data);
-
-
 function ribuan($nilai)
 {
     return number_format($nilai, 0, ',', '.');
@@ -54,31 +50,6 @@ if (isset($_POST['tambahMenu'])) {
     }
 }
 
-//update Data menu
-if (isset($_POST['editMenu'])) {
-    $ID_Item = $_POST['ID_Item'];
-    $Nama_Item = $_POST['Nama_Item'];
-    $Harga_Satuan = $_POST['Harga_Satuan'];
-
-    // Query update data
-    $query = "UPDATE menu SET Nama_Item = '$Nama_Item', Harga_Satuan ='$Harga_Satuan' WHERE ID_Item = '$ID_Item'";
-    $edit = mysqli_query($koneksi, $query);
-    if ($edit) {
-        ?>
-        <script>
-            alert('Berhasil update data menu')
-        </script>
-        <?php
-        header('location:menu.php');
-    } else {
-        ?>
-        <script>
-            alert('Gagal update data menu')
-        </script>
-        <?php
-        header('location:menu.php');
-    }
-}
 
 //menghapus data menu
 if (isset($_POST['hapusMenu'])) {
@@ -93,6 +64,48 @@ if (isset($_POST['hapusMenu'])) {
     }
 }
 
+if (isset($_POST['hapusInvoice'])) {
+    $ID_INV = $_POST['ID_INV'];
+
+    // Mulai transaksi
+    mysqli_begin_transaction($koneksi);
+
+    try {
+        // Hapus data dari tabel_detail_transaksi
+        $queryDetail = "DELETE FROM `detail` WHERE ID_INV = '$ID_INV'";
+        mysqli_query($koneksi, $queryDetail);
+
+        // Hapus data dari tabel_header_transaksi
+        $queryHeader = "DELETE FROM `header` WHERE ID_INV = '$ID_INV'";
+        mysqli_query($koneksi, $queryHeader);
+
+        // Commit transaksi
+        mysqli_commit($koneksi);
+
+        ?>
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <h6><i class="fas fa-check"></i><b> Data Terhapus !</b></h6>
+        </div>
+        <?php
+        header('location:invoice.php');
+    } catch (Exception $e) {
+        // Rollback transaksi jika terjadi kesalahan
+        mysqli_rollback($koneksi);
+
+        ?>
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <h6><i class="fas fa-ban"></i><b> Gagal!</b></h6>
+        </div>
+        <?php
+        header('location:invoice.php');
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -103,7 +116,6 @@ if (isset($_POST['hapusMenu'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png" />
     <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
-    <title>Soft UI Dashboard by Creative Tim</title>
     <?php include ("assets/css/maincss.php"); ?>
 </head>
 
@@ -130,7 +142,7 @@ if (isset($_POST['hapusMenu'])) {
                         <li class="nav-item d-flex align-items-center">
                             <p href="javascript:;" class="nav-link text-body font-weight-bold px-0">
                                 <i class="fa fa-user me-sm-1"></i>
-                                <span class="d-sm-inline d-none"><?= $hasil['Nama_Kasir'] ?></span>
+                                <span class="d-sm-inline d-none">Admin</span>
                             </p>
                         </li>
                     </ul>
@@ -143,7 +155,7 @@ if (isset($_POST['hapusMenu'])) {
                 <div class="col-12">
                     <div class="card mb-4">
                         <div class="card-header pb-0 d-flex align-items-center justify-content-between">
-                            <h6>Authors table</h6>
+                            <h6>Tabel Invoice</h6>
                             <!-- Button trigger modal -->
                             <a href="buat-invoice.php" class="btn bg-gradient-dark">
                                 <i class="fas fa-plus"></i>
@@ -209,40 +221,36 @@ if (isset($_POST['hapusMenu'])) {
 
                                                 </td>
                                             </tr>
-                                            <!-- MODAL DELETE MENU -->
-                                            <div class="modal fade" id="hapus<?= $id ?>" data-bs-backdrop="static"
-                                                data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
-                                                aria-hidden="true">
-                                                <div class="modal-dialog">
+                                            <!-- MODAL DELETE INVOICE -->
+                                            <div class="modal fade" id="hapus<?= $id; ?>" tabindex="-1" role="dialog"
+                                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Hapus Menu</h5>
-                                                            <button type="button" class="btn btn-outline-secondary"
-                                                                data-bs-dismiss="modal" aria-label="Close">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Hapus Data
+                                                                Invoice</h5>
+                                                            <button type="button" class="close btn btn-outline-primary"
+                                                                data-dismiss="modal" aria-label="Close">
                                                                 <i class="fa fa-times" aria-hidden="true"></i>
                                                             </button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <form role="form" method="POST">
-                                                                <p>Apakah anda yakin ingin menghapus
-                                                                    <?= $data['Nama_Item']; ?>?
-                                                                </p>
-                                                                <div class="mb-3">
-                                                                    <input id="ID_Item" name="ID_Item" type="hidden"
-                                                                        class="form-control" placeholder="ID Item"
-                                                                        aria-label="Email" aria-describedby="email-addon"
-                                                                        value="<?= $id ?>">
+                                                            <!--Form Hapus Customer-->
+                                                            <form method="POST">
+                                                                <div class="form-group">
+                                                                    <p>Apakah anda yakin ingin menghapus Invoice
+                                                                        <?= $data['Tanggal'] ?>/<?= $data['ID_INV'] ?>?
+                                                                        <input type="hidden" name="ID_INV"
+                                                                            class="form-control" value="<?= $id; ?>">
                                                                 </div>
-                                                                <div class="d-flex justify-content-end">
-                                                                    <button type="button"
-                                                                        class="btn btn-outline-secondary mx-2"
-                                                                        data-bs-dismiss="modal">Tutup</button>
-                                                                    <input type="submit" name="hapusMenu"
-                                                                        class="btn bg-info text-white" value="Hapus">
+                                                                <div class="modal-footer">
+                                                                    <button type="submit" class="btn btn-outline-primary"
+                                                                        data-dismiss="modal">Close</button>
+                                                                    <input type="submit" class="btn btn-primary"
+                                                                        name="hapusInvoice" value="Hapus">
                                                                 </div>
                                                             </form>
                                                         </div>
-
                                                     </div>
                                                 </div>
                                             </div>

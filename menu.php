@@ -1,9 +1,6 @@
 <?php
 include ('koneksi.php');
 
-$data = mysqli_query($koneksi, "SELECT * FROM kasir WHERE ID_Kasir = 'KSR1'");
-$hasil = mysqli_fetch_assoc($data);
-
 function ribuan($nilai)
 {
     return number_format($nilai, 0, ',', '.');
@@ -26,17 +23,17 @@ if (isset($_POST['tambahMenu'])) {
         $tambah = mysqli_query($koneksi, $query);
         if ($tambah) {
             ?>
-            <script>
-                alert('Data menu berhasil ditambahkan');
-            </script>
-            <?php
+<script>
+alert('Data menu berhasil ditambahkan');
+</script>
+<?php
             header('location:menu.php');
         } else {
             ?>
-            <script>
-                alert('Gagal menambah data menu');
-            </script>
-            <?php
+<script>
+alert('Gagal menambah data menu');
+</script>
+<?php
             header('location:menu.php');
         }
     } else {
@@ -56,17 +53,17 @@ if (isset($_POST['editMenu'])) {
     $edit = mysqli_query($koneksi, $query);
     if ($edit) {
         ?>
-        <script>
-            alert('Berhasil update data menu')
-        </script>
-        <?php
+<script>
+alert('Berhasil update data menu')
+</script>
+<?php
         header('location:menu.php');
     } else {
         ?>
-        <script>
-            alert('Gagal update data menu')
-        </script>
-        <?php
+<script>
+alert('Gagal update data menu')
+</script>
+<?php
         header('location:menu.php');
     }
 }
@@ -121,7 +118,7 @@ if (isset($_POST['hapusMenu'])) {
                         <li class="nav-item d-flex align-items-center">
                             <p href="javascript:;" class="nav-link text-body font-weight-bold px-0">
                                 <i class="fa fa-user me-sm-1"></i>
-                                <span class="d-sm-inline d-none"><?= $hasil['Nama_Kasir'] ?></span>
+                                <span class="d-sm-inline d-none">Admin</span>
                             </p>
                         </li>
                     </ul>
@@ -134,7 +131,7 @@ if (isset($_POST['hapusMenu'])) {
                 <div class="col-12">
                     <div class="card mb-4">
                         <div class="card-header pb-0 d-flex align-items-center justify-content-between">
-                            <h6>Authors table</h6>
+                            <h6>Tabel Menu</h6>
                             <!-- Button trigger modal -->
                             <button type="button" class="btn bg-gradient-dark" data-bs-toggle="modal"
                                 data-bs-target="#inputMenu">
@@ -172,110 +169,110 @@ if (isset($_POST['hapusMenu'])) {
                                         while ($data = mysqli_fetch_assoc($hasil)) {
                                             $id = $data['ID_Item'];
                                             ?>
-                                            <tr>
-                                                <td>
-                                                    <h6 class="mb-0 text-sm px-3"><?= $no++ ?></h6>
-                                                </td>
-                                                <td>
-                                                    <h6 class="mb-0 text-sm px-3"><?= $data['Nama_Item'] ?></h6>
-                                                </td>
-                                                <td>
-                                                    <h6 class="mb-0 text-sm">Rp. <?= ribuan($data['Harga_Satuan']) ?></h6>
-                                                </td>
-                                                <td>
-                                                    <button type="button" class="btn bg-success text-white mb-0"
-                                                        data-bs-toggle="modal" data-bs-target="#edit<?= $id ?>">
-                                                        <i class="fa fa-pencil" aria-hidden="true"></i>
-                                                    </button>
-                                                    <button type="button" class="btn bg-danger text-white mb-0"
-                                                        data-bs-toggle="modal" data-bs-target="#hapus<?= $id ?>">
-                                                        <i class="fa fa-trash" aria-hidden="true"></i>
-                                                    </button>
+                                        <tr>
+                                            <td>
+                                                <h6 class="mb-0 text-sm px-3"><?= $no++ ?></h6>
+                                            </td>
+                                            <td>
+                                                <h6 class="mb-0 text-sm px-3"><?= $data['Nama_Item'] ?></h6>
+                                            </td>
+                                            <td>
+                                                <h6 class="mb-0 text-sm">Rp. <?= ribuan($data['Harga_Satuan']) ?></h6>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn bg-success text-white mb-0"
+                                                    data-bs-toggle="modal" data-bs-target="#edit<?= $id ?>">
+                                                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                                                </button>
+                                                <button type="button" class="btn bg-danger text-white mb-0"
+                                                    data-bs-toggle="modal" data-bs-target="#hapus<?= $id ?>">
+                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                </button>
 
-                                                </td>
-                                            </tr>
-                                            <!-- MODAL DELETE MENU -->
-                                            <div class="modal fade" id="hapus<?= $id ?>" data-bs-backdrop="static"
-                                                data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
-                                                aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Hapus Menu</h5>
-                                                            <button type="button" class="btn btn-outline-secondary"
-                                                                data-bs-dismiss="modal" aria-label="Close">
-                                                                <i class="fa fa-times" aria-hidden="true"></i>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <form role="form" method="POST">
-                                                                <p>Apakah anda yakin ingin menghapus
-                                                                    <?= $data['Nama_Item']; ?>?
-                                                                </p>
-                                                                <div class="mb-3">
-                                                                    <input id="ID_Item" name="ID_Item" type="hidden"
-                                                                        class="form-control" placeholder="ID Item"
-                                                                        aria-label="Email" aria-describedby="email-addon"
-                                                                        value="<?= $id ?>">
-                                                                </div>
-                                                                <div class="d-flex justify-content-end">
-                                                                    <button type="button"
-                                                                        class="btn btn-outline-secondary mx-2"
-                                                                        data-bs-dismiss="modal">Tutup</button>
-                                                                    <input type="submit" name="hapusMenu"
-                                                                        class="btn bg-info text-white" value="Hapus">
-                                                                </div>
-                                                            </form>
-                                                        </div>
-
+                                            </td>
+                                        </tr>
+                                        <!-- MODAL DELETE MENU -->
+                                        <div class="modal fade" id="hapus<?= $id ?>" data-bs-backdrop="static"
+                                            data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                            aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Hapus Menu</h5>
+                                                        <button type="button" class="btn btn-outline-secondary"
+                                                            data-bs-dismiss="modal" aria-label="Close">
+                                                            <i class="fa fa-times" aria-hidden="true"></i>
+                                                        </button>
                                                     </div>
-                                                </div>
-                                            </div>
-                                            <!-- MODAL EDIT MENU -->
-                                            <div class="modal fade" id="edit<?= $id ?>" data-bs-backdrop="static"
-                                                data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
-                                                aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Menu
-                                                            </h1>
-                                                            <button type="button" class="btn btn-outline-secondary"
-                                                                data-bs-dismiss="modal" aria-label="Close">
-                                                                <i class="fa fa-times" aria-hidden="true"></i>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <form role="form" method="POST">
+                                                    <div class="modal-body">
+                                                        <form role="form" method="POST">
+                                                            <p>Apakah anda yakin ingin menghapus
+                                                                <?= $data['Nama_Item']; ?>?
+                                                            </p>
+                                                            <div class="mb-3">
                                                                 <input id="ID_Item" name="ID_Item" type="hidden"
                                                                     class="form-control" placeholder="ID Item"
                                                                     aria-label="Email" aria-describedby="email-addon"
                                                                     value="<?= $id ?>">
-                                                                <label for="Nama_Item">Nama Item</label>
-                                                                <div class="mb-3">
-                                                                    <input id="Nama_Item" name="Nama_Item" type="text"
-                                                                        class="form-control" placeholder="ID Item"
-                                                                        aria-label="Email" aria-describedby="email-addon"
-                                                                        value="<?= $data['Nama_Item'] ?>">
-                                                                </div>
-                                                                <label for="Harga_Satuan">Harga Satuan</label>
-                                                                <div class="mb-3">
-                                                                    <input id="Harga_Satuan" name="Harga_Satuan" type="text"
-                                                                        class="form-control" placeholder="ID Item"
-                                                                        aria-label="Email" aria-describedby="email-addon"
-                                                                        value="<?= $data['Harga_Satuan'] ?>">
-                                                                </div>
-                                                                <div class="d-flex justify-content-end">
-                                                                    <button type="button"
-                                                                        class="btn btn-outline-secondary mx-2"
-                                                                        data-bs-dismiss="modal">Tutup</button>
-                                                                    <input type="submit" name="editMenu"
-                                                                        class="btn bg-info text-white" value="Simpan">
-                                                                </div>
-                                                            </form>
-                                                        </div>
+                                                            </div>
+                                                            <div class="d-flex justify-content-end">
+                                                                <button type="button"
+                                                                    class="btn btn-outline-secondary mx-2"
+                                                                    data-bs-dismiss="modal">Tutup</button>
+                                                                <input type="submit" name="hapusMenu"
+                                                                    class="btn bg-info text-white" value="Hapus">
+                                                            </div>
+                                                        </form>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- MODAL EDIT MENU -->
+                                        <div class="modal fade" id="edit<?= $id ?>" data-bs-backdrop="static"
+                                            data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                            aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Menu
+                                                        </h1>
+                                                        <button type="button" class="btn btn-outline-secondary"
+                                                            data-bs-dismiss="modal" aria-label="Close">
+                                                            <i class="fa fa-times" aria-hidden="true"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form role="form" method="POST">
+                                                            <input id="ID_Item" name="ID_Item" type="hidden"
+                                                                class="form-control" placeholder="ID Item"
+                                                                aria-label="Email" aria-describedby="email-addon"
+                                                                value="<?= $id ?>">
+                                                            <label for="Nama_Item">Nama Item</label>
+                                                            <div class="mb-3">
+                                                                <input id="Nama_Item" name="Nama_Item" type="text"
+                                                                    class="form-control" placeholder="ID Item"
+                                                                    aria-label="Email" aria-describedby="email-addon"
+                                                                    value="<?= $data['Nama_Item'] ?>">
+                                                            </div>
+                                                            <label for="Harga_Satuan">Harga Satuan</label>
+                                                            <div class="mb-3">
+                                                                <input id="Harga_Satuan" name="Harga_Satuan" type="text"
+                                                                    class="form-control" placeholder="ID Item"
+                                                                    aria-label="Email" aria-describedby="email-addon"
+                                                                    value="<?= $data['Harga_Satuan'] ?>">
+                                                            </div>
+                                                            <div class="d-flex justify-content-end">
+                                                                <button type="button"
+                                                                    class="btn btn-outline-secondary mx-2"
+                                                                    data-bs-dismiss="modal">Tutup</button>
+                                                                <input type="submit" name="editMenu"
+                                                                    class="btn bg-info text-white" value="Simpan">
+                                                            </div>
+                                                        </form>
                                                     </div>
                                                 </div>
+                                            </div>
                                             <?php } ?>
                                     </tbody>
                                 </table>
